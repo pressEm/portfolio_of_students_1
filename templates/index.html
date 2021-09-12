@@ -1,0 +1,34 @@
+{% if admin %}
+	{% extends 'base-admin.html' %}
+{% else %}
+	{% extends 'base.html' %}
+{% endif %}
+
+{% block content %}
+{{ super() }}
+<hr>
+<div class="list_students">
+             {% if admin %}
+
+     <ul class="mainmenu">
+<li><a href="{{url_for('index')}}">Список портфолио</a></li>
+	<li><a href="{{url_for('index_admin')}}">Список пользователей</a></li>
+</ul>
+             {% endif %}
+
+    <h2>Портфолио</h2>
+<ul class="list-posts">
+    {% for s in students %}
+    <li>
+    {% for u in users %}
+    {% if u.id == s.user_id %}
+        <p class="title"><a href="{{ url_for('showPost', user_id=u.id)}}">{{u.name}}</a></p>
+        <p class="annonce">{{ s.study[:50] | striptags  }}</p>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

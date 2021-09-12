@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
+{% block title -%}
+{% if title %}
+	<title>Student portfolio - {{title}}</title>
+{% else %}
+	<title>Student portfolio</title>
+{% endif %}
+{% endblock %}
+</head>
+<body>
+	<h1>Портфолио студентов</h1>
+{% block content -%}
+	{%- block mainmenu -%}
+<ul class="mainmenu">
+{% for p in menu %}
+<li><a href="{{url_for(p.url)}}">{{p.title}}</a></li>
+{% endfor %}
+</ul>
+	{% endblock mainmenu -%}
+<div class="clear"></div>
+<div class="content">
+	{% if title -%}
+<h1>{{title}}</h1>
+	{% else -%}
+	<div class ="info_site">
+		<div class="in">
+			<h1>Портфолио студентов</h1>
+			<p>Приложение Портфолио студентов обеспечивает фиксирование и накопление материалов,
+			представляющих уровень профессионализма в научной деятельности студента
+			и в его активности в общественных университетских и городских событиях. </p>
+		</div>
+
+	</div>
+	{% endif -%}
+{% endblock -%}
+</div>
+</body>
+</html>

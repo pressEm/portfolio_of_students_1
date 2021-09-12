@@ -1,0 +1,43 @@
+  {% if admin %}
+	{% extends 'base-admin.html' %}
+{% else %}
+	{% extends 'base.html' %}
+{% endif %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<table border="0" class="profile-table">
+	<tr><td valign="top">
+		<div class="profile-ava"><img src="{{ url_for('userava', user_id=current_user.get_id()) }}"></div>
+		<div class="profile-load">
+		</div>
+	</td>
+	<td valign="top" class="profile-panel">
+		<ul class="profile-info">
+		<li>Имя: {{ current_user.getName() }}</li>
+		<li>Email: {{ current_user.getEmail() }}</li>
+			{% if not admin %}
+		<li>Место обучения:	{{ study }}</li>
+		<li>Место работы: {{ work }}</li>
+		<li>Информация о студенте: {{ about_student }}</li>
+		{% if study == "" and work == "" and about_student == "" %}
+			<li><a href="{{url_for('addInfo')}}">Добавить информацию</a></li>
+		{% else %}
+			<li><a href="{{url_for('change')}}">Редактировать</a></li>
+		{% endif %}
+			{% endif %}
+			<p><a href="{{url_for('logout')}}">Выйти из профиля</a>
+
+		</ul>
+<!--		<form action="/change">-->
+
+<!--		</form>-->
+	</td></tr>
+	<tr><td>
+
+	</td></tr>
+</table>
+{% endblock %}

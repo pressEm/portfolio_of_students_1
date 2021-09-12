@@ -1,0 +1,25 @@
+{% extends 'base-admin.html' %}
+
+{% block content %}
+{{ super() }}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}">{{msg}}</div>
+{% endfor %}
+<table border="0" class="profile-table">
+	<tr><td valign="top">
+		<div class="profile-ava"><img src="{{ url_for('userava', user_id=current_user.get_id()) }}"></div>
+		<div class="profile-load">
+		</div>
+	</td>
+	<td valign="top" class="profile-panel">
+		<ul class="profile-info">
+		<li>Имя: {{ current_user.getName() }}</li>
+		<li>Email: {{ current_user.getEmail() }}</li>
+			<p><a href="{{url_for('logout')}}">Выйти из профиля</a>
+		</ul>
+	</td></tr>
+	<tr><td>
+
+	</td></tr>
+</table>
+{% endblock %}

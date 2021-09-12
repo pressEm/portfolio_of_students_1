@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+<table border="0" class="profile-table">
+	<tr><td valign="top">
+		<div class="profile-ava"><img src="{{ url_for('userava', user_id=user_id) }}"></div>
+		<div class="profile-load">
+		</div>
+	</td>
+	<td valign="top" class="profile-panel">
+		<ul class="profile-info">
+		<li>Имя: {{ name }}</li>
+		<li>Email: {{ email }}</li>
+		<li>Место обучения: {{ study }} </li>
+		<li>Место работы: {{ work }} </li>
+		<li>Информация о студенте: {{ about_student }} </li>
+		<li><a href="{{url_for('index')}}"> Вернуться на главную страницу</a></li>
+		</ul>
+	</td></tr>
+        <tr><td>
+			<form action="{{ url_for('add_comment', author_id=author.id, user_id=user_id) }}" method="post">
+				 <p><label>Ваш комментарий:</label><br/>
+					 <textarea name="text_comment" cols="30" rows="10"></textarea></p>
+ 				 <p><input type="submit" value="Отправить комментарий" /></p>
+			</form>
+		</td></tr>
+		<tr><td>
+	 <!--СПИСОК КОММЕНТАРИЕВ-->
+		<div class="comments-box">
+			{% if allComments %}
+				{% for c in allComments %}
+			<table border="0" class="comments-table">
+				<tr><td class="comments-content">
+						<ul class="list-posts">
+						<li><p class="annonce"><a href="{{ url_for('showPost', user_id=author.id)}}">{{ author.name }}</a></p>
+							<p class="title">{{ c[2] }}</p>
+						</li>
+						</ul>
+					</td>
+					<td>
+						<ul class="comment-date">
+						<li><a>{{c[1]}}</a></li>
+						</ul>
+					</td></tr>
+			</table>
+		</div>
+
+{% endfor %}
+		{% else %}
+			<p>Оставьте комментарий первым! </p>
+		{% endif %}
+	 </td></tr>
+</table>
+<div>
+	<form action="{{ url_for('delete_user', user_id=user_id) }}" method="post">
+ 				 <p><input type="submit" value="Удалить пользователя" /></p>
+	</form>
+</div>
+{% endblock %}
